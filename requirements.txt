@@ -1,0 +1,7 @@
+annoy==1.15.0
+Django==1.11
+django-annoying==0.10.4
+django-bootstrap3==11.0.0
+pkg-resources==0.0.0
+psycopg2==2.7.6.1
+pytz==2018.7

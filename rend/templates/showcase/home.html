@@ -1,0 +1,83 @@
+{% extends 'showcase/base.html' %}
+{% load static%}
+{% load bootstrap3 %}
+{% block content %}
+{{block.super}}
+
+{% if request.user.is_authenticated %}
+
+{% else %}
+<p>You must be authenticated</p>
+{% endif %}
+<div class="homebody">
+    <div class="container">
+        <div class="w3-card-6" style="width:56%">
+
+            <div class="container">
+                {% if all_images %} {% for image in all_images %}
+                <div class="imagepadding">
+
+
+                    <p class="usernamehome-dp">
+                        {% if all_users %} {% for user in all_users %}
+                        <strong> "{{user.user}}" </strong>
+                        {% endfor %}{% else %}
+                        <strong>grammer</strong>
+
+                        {% endif %}
+                    </p>
+
+                    <a href="{{ insta.image }}" data-lightbox="gallery">
+                        <img src="{{ image.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
+                    </a>
+
+                    <div class="container">
+                        <div class='likesect'>
+
+                            <span class="like-row">
+                                {% if liked %}
+                                <img class="likehrt" src="{% static 'images/liked.png' %}" alt="liked picture" class="img-responsive">
+                                {%
+                                else %}
+                                <img class="likehrt" src="{% static 'images/liked.png' %}" alt="not likedpicture" class="img-responsive">
+                                {% endif %}
+
+                            </span>
+                            <!-- <p><strong>5 likes</strong> </p> -->
+                            {% if all_users %} {% for user in all_users %}
+                            <strong> "{{user.user}}" </strong>
+                            {% endfor %}{% else %}
+                            <p><strong>grammer</strong> {{image.image_caption}}</p>
+
+                            {% endif %}
+
+                            <form action="{% url 'index' %}" method="post">
+                                {%csrf_token%}
+                                <input type="text" name="betty" value="{{image.id}}" style="position:relative;left: 10000px">
+                                {% bootstrap_form form %}
+                                <div class="form-group">
+                                    <button type="submit">Post</button>
+                                </div>
+                            </form>
+                            {% for comment in image.comments.all%}
+                            <p>{{comment.comment_post}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            {% endfor %} {% else%}
+            <h3>You have no images</h3>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+</div>
+</div>
+{% endblock %}
