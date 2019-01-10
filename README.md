@@ -24,14 +24,14 @@ Copy a link to the photo to share with friends.
 View photos based on the location they were taken.
 
 ## Technologies Used
-Python 3.6.6(Django Framework)
-HTML5
-CSS3
-Bootstrap3
-Postgresql
-Heroku(Deployment)
-Known Bugs
-No known bugs so far
+* Python 3.6.6(Django Framework)
+* HTML5
+* CSS3
+* Bootstrap3
+* Postgresql
+* Heroku(Deployment)
+* Known Bugs
+* No known bugs so far
 
 ## License
 MIT License Copyright <2018>
