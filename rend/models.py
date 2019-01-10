@@ -19,7 +19,7 @@ class Profile(models.Model):
         return self.profile.user
         
 class Image(models.Model):
-    image = models.ImageField(upload_to ='pictsagram/')
+    image = models.ImageField(upload_to ='pictsarend/')
     image_caption = models.CharField(max_length=700)
     tag_someone = models.CharField(max_length=50,blank=True)
     imageuploader_profile = models.ForeignKey(User, on_delete=models.CASCADE,null='True', blank=True)
@@ -49,7 +49,7 @@ class Comments (models.Model):
 
 class Likes(models.Model):
     user_liked = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='likes')
+        User, on_delete=models.CASCADE, related_name='liked')
     liked_post = models.ForeignKey(
         Image, on_delete=models.CASCADE, related_name='likes')
 
