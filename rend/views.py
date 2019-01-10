@@ -15,7 +15,7 @@ from .models import Comments
 
 # Create your views here.
 def welcome(request):
-    return HttpResponse('Welcome to Instagram')
+    return HttpResponse('Welcome to Renditt')
 
 @login_required(login_url='/accounts/login')
 def index(request):
