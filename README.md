@@ -22,7 +22,8 @@ Click on a single photo to expand it and also view the details of the photo.
 Search for different categories of photos. (ie. Music, Sports)
 Copy a link to the photo to share with friends.
 View photos based on the location they were taken.
-Technologies Used
+
+## Technologies Used
 Python 3.6.6(Django Framework)
 HTML5
 CSS3
@@ -41,4 +42,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## Copyright (c) 2018 Betty Kariuki
+Copyright (c) 2018 Betty Kariuki
