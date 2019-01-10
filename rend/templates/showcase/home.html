@@ -22,12 +22,12 @@
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
                         {% endfor %}{% else %}
-                        <strong>grammer</strong>
+                        <strong>render</strong>
 
                         {% endif %}
                     </p>
 
-                    <a href="{{ insta.image }}" data-lightbox="gallery">
+                    <a href="{{ rend.image }}" data-lightbox="gallery">
                         <img src="{{ image.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
                     </a>
 
@@ -47,7 +47,7 @@
                             {% if all_users %} {% for user in all_users %}
                             <strong> "{{user.user}}" </strong>
                             {% endfor %}{% else %}
-                            <p><strong>grammer</strong> {{image.image_caption}}</p>
+                            <p><strong>render</strong> {{image.image_caption}}</p>
 
                             {% endif %}
 
