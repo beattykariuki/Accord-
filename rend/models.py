@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import URLValidator
 from django.contrib.auth.models import User
 import datetime
 from django.db.models.signals import post_save
@@ -17,29 +18,24 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.profile.user
-        
-class Image(models.Model):
-    image = models.ImageField(upload_to ='pictsarend/')
-    image_caption = models.CharField(max_length=700)
-    tag_someone = models.CharField(max_length=50,blank=True)
-    imageuploader_profile = models.ForeignKey(User, on_delete=models.CASCADE,null='True', blank=True)
-    image_likes = models.ManyToManyField(User, default=False, blank=True, related_name='likes')
-    date = models.DateTimeField(auto_now_add=True, null= True)
 
-    def __str__(self):
-        return self.image_caption
-    
-    @property
-    def count_likes(self):
-        likes = self.likes.count()
+class Project(models.Model):
+    title = models.CharField(max_length = 50)
+    image = models.ImageField(upload_to = 'projects/')
+    description = models.TextField(max_length=1000)
+    link=models.TextField(validators=[URLValidator()],null=True)
+    profile = models.ForeignKey(User,on_delete=models.CASCADE, null=True)   
+    design=models.PositiveIntegerField(choices=list(zip(range(1,11),range(1, 11))), default=1)
+    userbility = models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
+    content=models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
 
-    def like(self,photo):
-        if self.mylikes.filter(photo=photo).count() == 0:
-            Likes(photo=photo, User=self().save)
+    def save_project(self):
+        self.save()
+    def delete_project(self):
+        self.delete()
 
 class Comments (models.Model):
-
-    post = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='comments')
     comment_post = models.CharField(max_length=150)
     author = models.ForeignKey(User,related_name='commenter' , on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -51,10 +47,10 @@ class Likes(models.Model):
     user_liked = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='liked')
     liked_post = models.ForeignKey(
-        Image, on_delete=models.CASCADE, related_name='likes')
+        Project, on_delete=models.CASCADE, related_name='likes')
 
     def save_like(self):
         self.save()
     
     def __str__(self):
-        return self.user_liked
+        return self.user_liked                                                             
