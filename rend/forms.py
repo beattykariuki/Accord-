@@ -1,12 +1,12 @@
 from django import forms
-from .models import Profile, Image
+from .models import Profile, Project
 from django.contrib.auth.models import User
 from .models import Comments
 
-class PostForm(forms.ModelForm):
+class VoteForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ("image_caption", "image",'tag_someone')
+        model = Project
+        fields = ['profile','design','userbility','content']
 
 class SignUpForm(forms.ModelForm):
     class Meta:
@@ -17,3 +17,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ('comment_post',)
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude = ['link','description','profile','image','title']
