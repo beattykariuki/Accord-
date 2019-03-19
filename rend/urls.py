@@ -10,7 +10,6 @@ urlpatterns=[
     url('^notifictaion/',views.notification,name = 'notification'),
     url('^profile/',views.profile,name = 'profile'),
     url('^login/',views.login,name = 'login'),
-    url('^logout/',views.index,{'next_page': 'accounts:login'}, name = 'logout'),
     url('^upload/',views.upload,name = 'upload'),
 ]
 

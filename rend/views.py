@@ -5,13 +5,13 @@ from django.conf.urls import url,include
 from django.contrib.auth import authenticate,login,logout
 from .forms import PostForm,CommentForm
 from django.conf.urls.static import static
-from .models import Profile,Project,Likes
+from .models import Profile,Project,Comments,Review
 from django.contrib.auth.models import User
 from annoying.decorators import ajax_request
 
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from .models import Comments
+from django.db.models import Avg
 
 # Create your views here.
 def welcome(request):
@@ -20,13 +20,14 @@ def welcome(request):
 @login_required(login_url='/accounts/login')
 def index(request):
     all_projects = Project.objects.all()
+    print(all_projects)
     all_users = Profile.objects.all()
-    likes = Likes.objects.all()
+    comments = Comments.objects.all() 
     next = request.GET.get('next')
     if request.method == 'POST':
        form = CommentForm(request.POST)
        image_id = int(request.POST.get("betty"))
-       post = Image.objects.get(id = image_id)
+       post = Project.objects.get(id = image_id)
        if form.is_valid():
            comment = form.save(commit=False)
            comment.post = post
@@ -36,11 +37,17 @@ def index(request):
     else:
         form = CommentForm()
     if next:return redirect(next)
-    return render(request, 'showcase/home.html', {"all_projects": all_projects,"all_users":all_users,'form':form})
+    return render(request, 'showcase/home.html', {"all_projects": all_projects,"all_users":all_users,'form':form,'comments':comments})
 
 def project(request,project_id):
-    project = Project.objects.get(id = project_id)
-    rating = round(((project.userinterface + project.functionality )/2),2)
+    if request.user.is_authenticated:
+       user = User.objects.get(id=request.user.id)
+       project = Project.objects.get(id = project_id)
+       reviews = Review.objects.filter(project=project)
+       design = reviews.aggregate(Avg('design'))['usability_avg']
+       usability = reviews.aggregate(Avg('usability'))['usability_avg']
+       content = reviews.aggregate(Avg('content'))['content_avg']
+       average = reviews.aggregate(Avg('average'))['average_avg'] 
     if request.method == 'POST':
         form = VoteForm(request.POST)
         if form.is_valid:
@@ -80,6 +87,7 @@ def upload(request):
     current_user = request.user
     p = Profile.objects.filter(id=current_user.id).first()
     # uploader_profile = Project.objects.filter(projectuploader_profile=p).all()
+
     if request.method == 'POST':
         form = PostForm(request.POST,request.FILES)
         if form.is_valid():
@@ -88,7 +96,7 @@ def upload(request):
             post.save()
             return redirect('/')
     else:
-        form =PostForm
+        form =PostForm()
     return render(request, 'showcase/upload.html', {"form": form})
 
 @login_required(login_url='/accounts/login/')
@@ -128,19 +136,3 @@ def vote_project(request, project_id):
                 project.content = (project.design + int(request.POST['content']))/2
 
 
-def add_comment_to_post(request):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-       form = CommentForm(request.POST)
-       if form.is_valid():
-           comment = form.save(commit=False)
-           comment.post =post
-           comment.save()
-           return redirect('post_detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'image/add_comment_to_home.html', {'form': form})
-
-def approve(self):
-    self.approved_comment = True
-    self.save()

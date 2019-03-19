@@ -21,4 +21,5 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Project
-        exclude = ['link','description','profile','image','title']
+        fields = ['link','description','profile','image','title']
+

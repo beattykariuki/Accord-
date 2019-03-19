@@ -14,7 +14,7 @@
         <div class="w3-card-6" style="width:56%">
 
             <div class="container">
-                {% if all_images %} {% for image in all_images %}
+                {% if all_projects %} {% for project in all_projects %}
                 <div class="imagepadding">
 
 
@@ -22,13 +22,13 @@
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
                         {% endfor %}{% else %}
-                        <strong>render</strong>
+                        <strong>Awwards</strong>
 
                         {% endif %}
                     </p>
 
                     <a href="{{ rend.image }}" data-lightbox="gallery">
-                        <img src="{{ image.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
+                        <img src="{{ project.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
                     </a>
 
                     <div class="container">
@@ -47,20 +47,22 @@
                             {% if all_users %} {% for user in all_users %}
                             <strong> "{{user.user}}" </strong>
                             {% endfor %}{% else %}
-                            <p><strong>render</strong> {{image.image_caption}}</p>
+                            <p><strong>AWWARDS</strong> {{project.image_caption}}</p>
 
                             {% endif %}
 
                             <form action="{% url 'index' %}" method="post">
                                 {%csrf_token%}
-                                <input type="text" name="betty" value="{{image.id}}" style="position:relative;left: 10000px">
+                                <input type="text" name="betty" value="{{project.id}}" style="position:relative;left: 10000px">
                                 {% bootstrap_form form %}
                                 <div class="form-group">
                                     <button type="submit">Post</button>
                                 </div>
                             </form>
-                            {% for comment in image.comments.all%}
+                            {% for comment in comments%}
+                            {% if comment.post_id == project.id%}
                             <p>{{comment.comment_post}}</p>
+                            {% endif %}
                             {% endfor %}
                         </div>
                     </div>
