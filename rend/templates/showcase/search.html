@@ -1,0 +1,24 @@
+{%extends 'showcase/base.html'%}
+{% block content %}
+
+<div class="container top">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="font2">Search results for {{message}}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if project %}
+        {% for proj in project %}
+        <div class="col-md-4 home-images search-results">
+            <img src="{{proj.image.url}}" alt="image" width="300" height="300">
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-md-12 text-center">
+            <h4 class="font1">Sorry,no results for {{message}} found!</h4>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}

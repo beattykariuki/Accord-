@@ -5,13 +5,15 @@ from django.conf.urls import url,include
 from django.contrib.auth import authenticate,login,logout
 from .forms import PostForm,CommentForm
 from django.conf.urls.static import static
-from .models import Profile,Project,Comments,Review
+# from .models import Profile,Project,Comments,Review
 from django.contrib.auth.models import User
 from annoying.decorators import ajax_request
 
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
+from .forms import *
+from .models import *
 
 # Create your views here.
 def welcome(request):
@@ -112,9 +114,41 @@ def unlike(request, project_id):
     return JsonReponse(image.count_likes, safe=False)
 
     
-
+@login_required(login_url='/accounts/login/')
 def profile(request):
-    return render(request,'showcase/profile.html')
+    current_user = request.user
+    profile = Profile.objects.all()
+
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES,instance=request.user.profile)
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return render(request,'showcase/profile.html')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+
+    context = {
+        'u_form':u_form,
+        'p_form':p_form
+    }
+
+    return render(request,'showcase/profile.html',locals())
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['image']
 
 def vote_project(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -135,4 +169,14 @@ def vote_project(request, project_id):
             else:
                 project.content = (project.design + int(request.POST['content']))/2
 
+def search(request):
+    if 'search' in request.GET and request.GET['search']:
+        search_term = request.GET.get('search')
+        project = Post.search_project(search_term)
+        message = f'{search_term}'
+
+        return render(request, 'showcase/search.html',{'message':message, 'project':project})
+    else:
+        message = 'Enter term to search'
+    return render(request, 'showcase/search.html', {'message':message})
 

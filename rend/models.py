@@ -9,15 +9,19 @@ from django.dispatch import receiver
 class Profile(models.Model):
 
     user = models.OneToOneField(User,on_delete=models.CASCADE,)
+    image = models.ImageField(default='default.jpg',upload_to='profile_pics')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     bio = models.CharField(max_length=350) 
     profile_pic = models.ImageField(upload_to='ProfilePicture/')
     profile_avatar = models.ImageField(upload_to='AvatorPicture/')
     date = models.DateTimeField(auto_now_add=True, null= True)  
-    # name = models.CharField()
+    
     def __str__(self):
-        return self.profile.user
+        return f'{self.user.username} Profile'
+
+    def save_profile():
+        self.save()
 
 class Project(models.Model):
     title = models.CharField(max_length = 50)
@@ -28,7 +32,7 @@ class Project(models.Model):
     design=models.PositiveIntegerField(choices=list(zip(range(1,11),range(1, 11))), default=1)
     userbility = models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
     content=models.PositiveIntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=1)
-
+    
     def save_project(self):
         self.save()
 
@@ -68,4 +72,9 @@ class Likes(models.Model):
         self.save()
     
     def __str__(self):
-        return self.user_liked                                                             
+        return self.user_liked 
+
+    @classmethod
+    def search_project(cls, name):
+        project = Project.objects.filter(title__icontains = name)
+        return project                                                            

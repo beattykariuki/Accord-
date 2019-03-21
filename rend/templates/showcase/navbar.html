@@ -3,16 +3,18 @@
 {% load staticfiles %}
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">
-            <img src="{% static '/images/logo.png' %}" style="width:120px;">
+        <a class="navbar-brand" href="{% url 'index' %}">Awwards
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
             aria-expanded="false">
         </button>
-        <div class="center">
-            <input style="height:23px;width:200px;margin-top:0px;margin-left:5px" type="text" class="input-sm form-control"
-                name="search-form" placeholder=" . Search">
-        </div>
+        <form class = 'navbar-form'role='search' action="{% url 'search' %}">
+                    <div class="center">
+                        <input style="height:23px;width:200px;margin-top:0px;margin-left:5px" type="text" class="input-sm form-control"
+                            name="search-form" placeholder=" Search">
+                    </div>
+
+        </form>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
@@ -38,11 +40,11 @@
                     <a class='btn btn-default' href="/accounts/login">Login</a>
                 </li>
                 {% endif %}
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'explore' %}">
                         <i class="material-icons" style="font-size:25px">public</i>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="fa fa-heart-o" style="font-size:25px;"></i>
