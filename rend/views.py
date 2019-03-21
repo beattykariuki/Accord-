@@ -172,7 +172,7 @@ def vote_project(request, project_id):
 def search(request):
     if 'search' in request.GET and request.GET['search']:
         search_term = request.GET.get('search')
-        project = Post.search_project(search_term)
+        project = Project.search_project(search_term)
         message = f'{search_term}'
 
         return render(request, 'showcase/search.html',{'message':message, 'project':project})

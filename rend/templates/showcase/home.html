@@ -52,11 +52,11 @@
 
                             </span>
                             <!-- <p><strong>5 likes</strong> </p> -->
-                            {% if all_users %} {% for user in all_users %}
+                            <!-- {% if all_users %} {% for user in all_users %}
                             <strong> "{{user.user}}" </strong>
                             {% endfor %}{% else %}
                             
-                            {% endif %}
+                            {% endif %} -->
 
                             <form action="{% url 'index' %}" method="post">
                                 {%csrf_token%}

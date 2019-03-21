@@ -39,6 +39,11 @@ class Project(models.Model):
     def delete_project(self):
         self.delete()
 
+    @classmethod
+    def search_project(cls, name):
+        pro = Project.objects.filter(title__icontains = name)
+        return pro 
+
 class Review(models.Model):
     design = models.IntegerField(default=0)
     usability = models.IntegerField(default=0)
@@ -73,8 +78,4 @@ class Likes(models.Model):
     
     def __str__(self):
         return self.user_liked 
-
-    @classmethod
-    def search_project(cls, name):
-        project = Project.objects.filter(title__icontains = name)
-        return project                                                            
+                                                          
