@@ -25,11 +25,19 @@
                         <strong>Awwards</strong>
 
                         {% endif %}
+                        
                     </p>
-
+                   
                     <a href="{{ rend.image }}" data-lightbox="gallery">
                         <img src="{{ project.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
                     </a>
+                    
+                    <p><strong>Description :</strong> 
+                        {{project.description}}</p>
+                    <p><strong>Link</strong>
+                    <a href="{{project.link}}">{{project.link}}</a>
+
+                    </p>
 
                     <div class="container">
                         <div class='likesect'>
@@ -47,8 +55,7 @@
                             {% if all_users %} {% for user in all_users %}
                             <strong> "{{user.user}}" </strong>
                             {% endfor %}{% else %}
-                            <p><strong>AWWARDS</strong> {{project.image_caption}}</p>
-
+                            
                             {% endif %}
 
                             <form action="{% url 'index' %}" method="post">
