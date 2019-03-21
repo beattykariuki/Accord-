@@ -15,7 +15,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='ProfilePicture/')
     profile_avatar = models.ImageField(upload_to='AvatorPicture/')
     date = models.DateTimeField(auto_now_add=True, null= True)  
-
+    # name = models.CharField()
     def __str__(self):
         return self.profile.user
 
