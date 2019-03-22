@@ -31,7 +31,8 @@
                     <a href="{{ rend.image }}" data-lightbox="gallery">
                         <img src="{{ project.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
                     </a>
-                    
+                    <p><strong>Title :</strong>
+                        {{project.title}}</p>
                     <p><strong>Description :</strong> 
                         {{project.description}}</p>
                     <p><strong>Link</strong>
@@ -60,7 +61,7 @@
 
                             <form action="{% url 'index' %}" method="post">
                                 {%csrf_token%}
-                                <input type="text" name="betty" value="{{project.id}}" style="position:relative;left: 10000px">
+                                <input type="text" name="betty" value="{{project.id}}" >
                                 {% bootstrap_form form %}
                                 <div class="form-group">
                                     <button type="submit">Post</button>

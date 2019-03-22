@@ -5,7 +5,7 @@ from django.conf.urls import url,include
 from django.contrib.auth import authenticate,login,logout
 from .forms import PostForm,CommentForm
 from django.conf.urls.static import static
-# from .models import Profile,Project,Comments,Review
+from .models import *
 from django.contrib.auth.models import User
 from annoying.decorators import ajax_request
 
@@ -118,10 +118,11 @@ def unlike(request, project_id):
 def profile(request):
     current_user = request.user
     profile = Profile.objects.all()
+    user = User.objects.all()
 
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST,instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES,instance=request.user.profile)
+        u_form = UserUpdateForm(request.POST,instance=current_user)
+        p_form = ProfileUpdateForm(request.POST,request.FILES,instance=current_user.profile)
 
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
@@ -129,7 +130,7 @@ def profile(request):
             return render(request,'showcase/profile.html')
     else:
         u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+        p_form = ProfileUpdateForm(instance=request.user)
 
 
     context = {

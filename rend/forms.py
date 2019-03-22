@@ -21,20 +21,20 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['link','description','profile','image','title']
+        fields = ('link','description','profile','image','title')
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ('username', 'email')
 
 class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['image']
+        exclude = ['user', 'image','first_name','date']
 
 
 
