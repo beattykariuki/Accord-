@@ -13,26 +13,32 @@
     <div class="container">
         <div class="w3-card-6" style="width:56%">
 
-            <div class="container">
+            <div class="container" style="">
                 {% if all_projects %} {% for project in all_projects %}
-                <div class="imagepadding">
+                <div class="imagepadding jumbotron row" style="box-shadow:1px 1px 5px rgba(0,0,0,.4);">
 
 
                     <p class="usernamehome-dp">
                         {% if all_users %} {% for user in all_users %}
                         <strong> "{{user.user}}" </strong>
                         {% endfor %}{% else %}
+
                         <strong>Awwards</strong>
 
                         {% endif %}
                         
                     </p>
-                   
+
+                      
                     <a href="{{ rend.image }}" data-lightbox="gallery">
-                        <img src="{{ project.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
+                        <img class="img-fluid" src="{{ project.image.url }}" class="img-responsive" style="width:400px;margin-left: 0%;margin-top:15px; ">
                     </a>
+                    <br>
+                    <br>
+<br><br><br>
                     <p><strong>Title :</strong>
                         {{project.title}}</p>
+                    <br>
                     <p><strong>Description :</strong> 
                         {{project.description}}</p>
                     <p><strong>Link</strong>
